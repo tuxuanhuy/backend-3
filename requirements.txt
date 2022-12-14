@@ -1,0 +1,12 @@
+# Virtual Env
+virtualenv
+
+# Core
+django
+djangorestframework
+Pillow
+requests
+
+# Auth Token
+djangorestframework-jwt
+djangorestframework-simplejwt
