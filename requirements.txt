@@ -10,3 +10,8 @@ requests
 # Auth Token
 djangorestframework-jwt
 djangorestframework-simplejwt
+
+# OpenCV
+opencv-python
+
+# Get list of folders

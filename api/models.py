@@ -2,10 +2,18 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from PIL import Image
+import numpy as np
+from io import BytesIO
+from django.core.files.base import ContentFile
+
+import cv2
+import os
+
 # Create your models here.
 
 def user_path(instance, filename):
     return '{0}/{1}'.format(instance.user.username, filename)
+
 
 class User(AbstractUser):
     first_name   = models.CharField(max_length=100)
@@ -42,6 +50,24 @@ class Face(models.Model):
 
     def __str__(self):
         return "{}".format(self.user.username)
+
+    def save(self, *args, **kwargs):
+
+        pil_img = Image.open(self.picture)
+
+        cv_img = np.array(pil_img)
+        img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+
+        im_pil = Image.fromarray(img)
+
+        buffer = BytesIO()
+        im_pil.save(buffer, format='png')
+        image_png = buffer.getvalue()
+
+        self.picture.save(str(self.picture), ContentFile(image_png), save=False)
+
+        super().save(*args, **kwargs)
+
 
 
 class Shift(models.Model):

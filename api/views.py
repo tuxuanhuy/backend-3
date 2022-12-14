@@ -71,6 +71,8 @@ class UserShift(generics.ListAPIView):
         return Shift.objects.filter(user = pk)
 
 
+
+
 # Search for Today
 class ShiftToday(generics.ListAPIView):
     serializer_class = ShiftSerializer
